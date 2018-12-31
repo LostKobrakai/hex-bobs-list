@@ -5,6 +5,6 @@
 use Mix.Config
 
 config :bob_versions,
-  ecto_repos: [BobVersions.Repo]
+  ecto_repos: []
 
 import_config "#{Mix.env()}.exs"

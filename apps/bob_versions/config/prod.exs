@@ -4,4 +4,8 @@
 # the umbrella root.
 use Mix.Config
 
-import_config "prod.secret.exs"
+config :bob_versions, BobVersions.Repo,
+  url: "${DATABASE_URL}",
+  database: "",
+  ssl: true,
+  pool_size: 2
