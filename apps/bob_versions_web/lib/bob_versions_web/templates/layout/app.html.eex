@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>BobVersions · Phoenix Framework</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/bulma-divider@2.0.1/dist/css/bulma-divider.min.css"/>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script type="text/javascript" src='<%= Routes.static_path(@conn, "/js/app.js") %>' defer></script>
+  </head>
+  <body>
+    <section class="hero is-medium is-warning is-bold">
+      <div class="hero-head">
+        <%= render "nav.html", assigns %>
+      </div>
+
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h1 class="title">
+            Bob's List
+          </h1>
+          <h2 class="subtitle">
+            Overview of all available elixir packages provided by hex
+          </h2>
+        </div>
+      </div>
+
+      <%= if assigns[:data] do %>
+        <div class="hero-foot">
+          <nav class="tabs is-boxed is-fullwidth">
+            <div class="container">
+              <ul>
+                <%= for {minor, _list} <- BobVersionsWeb.PageView.sort_by_minor(@data), match?(<<"v"::binary, _::binary>>, minor) || ("master" == minor) do %>
+                  <li class='<%= if minor == @stable, do: "is-active" %>'>
+                    <a href="#version_<%= minor %>"><%= String.trim_leading(minor, "v") %></a>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      <% end %>
+    </section>
+
+    <main role="main">
+      <%= render @view_module, @view_template, assigns %>
+    </main>
+
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+          <strong>Built</strong> by <a href="https://jgthms.com">Benjamin Milde</a>. Based on the data provided by <a href="https://repo.hex.pm/builds/elixir/builds.txt">hex</a>.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<%= for {minor, list} <- sort_by_minor(@data) do %>
+  <section class="section" id="version_<%= minor %>">
+    <div class="container">
+      <h2 class="title  has-text-centered"><%= String.trim_leading(minor, "v") %></h2>
+
+      <div class="columns is-multiline is-centered">
+        <%= for %{version: version, versions: versions, git: git} <- sort_by_version(list) do %>
+          <div class="column is-one-third">
+<article class="panel">
+  <div class="panel-heading has-background-warning">
+    <div class="level">
+      <div class="level-left">
+        <span class="level-item">
+          <%= String.trim_leading(version, "v") %>
+        </span>
+      </div>
+      <div class="level-right">
+        <a class="level-item has-text-grey is-size-7" href="<%= git.url %>" aria-label="github">
+          <abbr title="<%= git.sha %>">
+            <%= git.sha |> String.slice(0..7) %>
+          </abbr>
+        </a>
+      </div>
+    </div>
+  </div>
+  <%= for el <- versions do %>
+    <a class='panel-block <%= if el.version.otp == @active, do: "is-active" %>' href="<%= el.download %>">
+      <div class="level" style="width: 100%">
+        <div class="level-left">
+          <div class="level-item">
+            <span class="panel-icon">
+              <i class="fas fa-cubes" aria-hidden="true"></i>
+            </span>
+            <%= version %><%= if el.version.otp != @active, do: "-otp-#{el.version.otp}" %>
+          </div>
+        </div>
+        <div class="level-right">
+          <small class="level-item has-text-grey-light">
+            <time datetime='<%= el.timestamp |> DateTime.to_iso8601 %>'><%= el.timestamp |> Date.to_iso8601 %></time>
+          </small>
+        </div>
+      </div>
+    </a>
+  <% end %>
+</article>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+<% end %>
