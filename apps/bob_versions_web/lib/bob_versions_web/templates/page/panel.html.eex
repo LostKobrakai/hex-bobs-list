@@ -1,0 +1,32 @@
+<% %{version: version, versions: versions, git: git} = @item %>
+<article class="panel">
+  <div class="panel-heading">
+    <div class="level">
+      <div class="level-left" style="min-width: 1%; flex-shrink: 1">
+        <span class="truncate">
+					<%= String.trim_leading(version, "v") %>
+        </span>
+      </div>
+			<%= if git.sha not in [nil, ""] do %>
+				<div class="level-right">
+					<a class="level-item muted-link is-size-7" 
+						href="<%= git.url %>" 
+						aria-label="github">
+						<span class="icon">
+							<i class="fab fa-github"></i>
+						</span>
+						<abbr class="is-muted" title="<%= git.sha %>">
+							<%= git.sha |> String.slice(0..7) %>
+						</abbr>
+					</a>
+				</div>
+			<% end %>
+    </div>
+  </div>
+  <%= for item <- versions do %>
+    <a class='panel-block <%= if item.version.otp == @active, do: "is-active" %>' 
+		   href="<%= item.download %>">
+      <%= render "panel-block.html", Map.merge(assigns, %{version: version, item: item}) %>
+    </a>
+  <% end %>
+</article>

@@ -1,0 +1,14 @@
+<span class="panel-icon">
+	<i class="fas fa-cubes" aria-hidden="true"></i>
+</span>
+
+<div class="leading-tight" style="min-width: 1%">
+	<div class="truncate">
+		<%= @version %><%= if @item.version.otp != @active, do: "-otp-#{@item.version.otp}" %>
+	</div>
+	<div class="is-size-7 has-text-grey-light">
+		<time datetime='<%= @item.timestamp |> DateTime.to_iso8601 %>'>
+			<%= @item.timestamp |> Date.to_iso8601 %>
+		</time>
+	</div>
+</div>
