@@ -50,7 +50,7 @@
     <footer class="footer">
       <div class="content has-text-centered">
         <p>
-          <strong>Built</strong> by <a href="https://kobrakai.de">Benjamin Milde</a>. Based on the data provided by <a href="https://repo.hex.pm/builds/elixir/builds.txt">hex</a>.
+          <strong>Built</strong> by <a href="https://kobrakai.de">Benjamin Milde</a>. Based on the data provided by <a href="https://repo.hex.pm/builds/elixir/builds.txt">hex</a>. Hosted on <a href="https://gigalixir.com/">gigalixir</a>'s free tier.
         </p>
       </div>
     </footer>
