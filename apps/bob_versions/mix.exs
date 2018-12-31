@@ -23,7 +23,7 @@ defmodule BobVersions.MixProject do
   def application do
     [
       mod: {BobVersions.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :inets]
     ]
   end
 
@@ -37,7 +37,7 @@ defmodule BobVersions.MixProject do
   defp deps do
     [
       {:postgrex, ">= 0.0.0-rc"},
-      {:ecto_sql, "~> 3.0-rc"},
+      {:ecto_sql, "~> 3.0-rc"}
     ]
   end
 
