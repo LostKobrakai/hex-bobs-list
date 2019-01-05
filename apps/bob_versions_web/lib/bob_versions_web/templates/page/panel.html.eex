@@ -25,7 +25,7 @@
   </div>
   <%= for item <- versions do %>
     <a class='panel-block <%= if item.version.otp == @active, do: "is-active" %>' 
-		   href="<%= item.download %>">
+		   href="<%= item.download %>" data-sha="<%= item.git.sha %>">
       <%= render "panel-block.html", Map.merge(assigns, %{version: version, item: item}) %>
     </a>
   <% end %>

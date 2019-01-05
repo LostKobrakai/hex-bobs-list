@@ -20,15 +20,25 @@ defmodule BobVersions.EtagCachedResources do
   @type etag :: charlist
 
   @ets_table __MODULE__
-  @default_opts [cache_timeout: 1800]
+  @default_opts [
+    cache_timeout: 1800,
+    method: :get
+  ]
 
+  @doc """
+  Start the server to cache etag values
+  """
   @spec start_link(Keyword.t()) :: GenServer.on_start()
   def start_link(opts \\ []) do
     Logger.debug("Start EtagCachedResources server")
     GenServer.start_link(__MODULE__, nil, opts)
   end
 
-  @spec resource(GenServer.server(), url, Keyword.t()) :: {:ok | :stale, binary} | :error
+  @doc """
+  Receive a resource from a givn url.
+  """
+  @spec resource(url, Keyword.t()) :: {:ok | :stale, binary} | :error
+  @spec resource(GenServer.server(), url) :: {:ok | :stale, binary} | :error
   def resource(url, opts \\ [])
 
   def resource(url, opts) when is_list(opts) do
@@ -78,14 +88,14 @@ defmodule BobVersions.EtagCachedResources do
           {:ok, content}
 
         {:stale, etag, content} ->
-          case update(url, etag) do
+          case update(url, etag, config) do
             {:ok, :not_modified} -> {:ok, content}
             {:ok, content} -> {:ok, content}
             :error -> {:stale, content}
           end
 
         :error ->
-          case update(url, nil) do
+          case update(url, nil, config) do
             {:ok, content} when is_binary(content) -> {:ok, content}
             :error -> :error
           end
@@ -95,8 +105,8 @@ defmodule BobVersions.EtagCachedResources do
   end
 
   @spec retrieve_resource(url, map) :: {:ok, binary} | {:stale, etag, binary} | :error
-  defp retrieve_resource(url, config) do
-    with [{^url, timestamp, etag, content}] <- :ets.lookup(@ets_table, url),
+  defp retrieve_resource(url, %{method: method} = config) do
+    with [{{^url, ^method}, timestamp, etag, content}] <- :ets.lookup(@ets_table, {url, method}),
          {:ok, content} <- check_for_stale_content(timestamp, etag, content, config) do
       {:ok, content}
     else
@@ -109,7 +119,7 @@ defmodule BobVersions.EtagCachedResources do
           {:ok, content} | {:stale, etag, content}
         when content: binary
   defp check_for_stale_content(timestamp, etag, content, %{cache_timeout: timeout}) do
-    now = DateTime.utc_now() |> DateTime.to_unix(:second)
+    now = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
     valid_until = timestamp + timeout
 
     cond do
@@ -118,41 +128,41 @@ defmodule BobVersions.EtagCachedResources do
     end
   end
 
-  @spec update(url, etag | nil) :: {:ok, binary} | {:ok, :not_modified} | :error
-  defp update(url, etag) do
+  @spec update(url, etag | nil, map) :: {:ok, binary} | {:ok, :not_modified} | :error
+  defp update(url, etag, %{method: method} = config) do
     headers = if_none_match_header(etag)
     url_char = String.to_charlist(url)
 
     result =
-      case :httpc.request(:get, {url_char, headers}, [], body_format: :binary) do
+      case :httpc.request(method, {url_char, headers}, [], body_format: :binary) do
         {:ok, {{_version, 200, 'OK'}, headers, body}} -> {:ok, headers, body}
         {:ok, {{_version, 304, 'Not Modified'}, headers, _body}} -> {:ok, headers, :not_modified}
         _ -> :error
       end
 
     case result do
-      {:ok, headers, body} -> update_table(url, headers, body)
+      {:ok, headers, body} -> update_table(url, headers, body, config)
       :error -> :error
     end
   end
 
-  @spec update_table(url, headers, :not_modified) :: {:ok, :not_modified} | :error
-  @spec update_table(url, headers, binary) :: {:ok, binary} | :error
-  defp update_table(url, headers, :not_modified) do
+  @spec update_table(url, headers, :not_modified, map) :: {:ok, :not_modified} | :error
+  @spec update_table(url, headers, binary, map) :: {:ok, binary} | :error
+  defp update_table(url, headers, :not_modified, %{method: method}) do
     etag = :proplists.get_value('etag', headers)
-    timestamp = DateTime.utc_now() |> DateTime.to_unix(:second)
+    timestamp = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
 
-    if :ets.update_element(@ets_table, url, [{2, timestamp}, {3, etag}]) do
+    if :ets.update_element(@ets_table, {url, method}, [{2, timestamp}, {3, etag}]) do
       {:ok, :not_modified}
     else
       :error
     end
   end
 
-  defp update_table(url, headers, body) do
+  defp update_table(url, headers, body, %{method: method}) do
     etag = :proplists.get_value('etag', headers)
-    timestamp = DateTime.utc_now() |> DateTime.to_unix(:second)
-    :ets.insert(@ets_table, {url, timestamp, etag, body})
+    timestamp = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
+    :ets.insert(@ets_table, {{url, method}, timestamp, etag, body})
     {:ok, body}
   end
 

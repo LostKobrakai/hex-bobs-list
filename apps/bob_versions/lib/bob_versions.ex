@@ -7,7 +7,7 @@ defmodule BobVersions do
   if it comes from the database, an external API or others.
   """
 
-  @cache_timeout 16 * 60
+  @cache_timeout :timer.minutes(15)
   @default_otp_version "Default"
   @current_stable "v1.7"
 
@@ -29,6 +29,7 @@ defmodule BobVersions do
     string
     |> lines_from_string()
     |> Enum.map(&line_to_data/1)
+    |> attach_availability()
     |> Enum.filter(&is_map/1)
     |> Enum.filter(&is_map(&1.version))
     |> group_by_version_and_sort
@@ -54,12 +55,25 @@ defmodule BobVersions do
     end
   end
 
-  def parse_datetime(timestamp) do
+  defp attach_availability(list) do
+    stream =
+      Task.async_stream(
+        list,
+        fn %{download: download} = data ->
+          Map.put(data, :availability, BobVersions.Availability.url_availability(download))
+        end,
+        max_concurrency: System.schedulers_online() * 4
+      )
+
+    for {:ok, executed} <- stream, do: executed
+  end
+
+  defp parse_datetime(timestamp) do
     {:ok, datetime, 0} = DateTime.from_iso8601(timestamp)
     datetime
   end
 
-  def version_from_string(string) do
+  defp version_from_string(string) do
     case Regex.named_captures(~r/^(?<elixir>.*?)(-otp-(?<otp>\d+))?$/, string) do
       %{"elixir" => elixir, "otp" => otp} when otp != "" ->
         %{elixir: elixir, otp: otp}

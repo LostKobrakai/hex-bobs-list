@@ -14,8 +14,6 @@ $panel-item-border: 1px solid darken($primary, 10%)
 
 // Import only what you need from Bulma
 @import "../node_modules/bulma/sass/utilities/_all.sass"
-@debug $colors
-
 @import "../node_modules/bulma/sass/base/_all.sass"
 @import "../node_modules/bulma/sass/grid/columns.sass"
 @import "../node_modules/bulma/sass/elements/container.sass"
@@ -29,6 +27,25 @@ $panel-item-border: 1px solid darken($primary, 10%)
 @import "../node_modules/bulma/sass/layout/section.sass"
 @import "../node_modules/bulma/sass/layout/section.sass"
 @import "../node_modules/bulma/sass/layout/footer.sass"
+
+.status
+	$diameter: 0.8rem
+	width: $diameter
+	border-radius: 100%
+	height: $diameter
+	border: 1px solid transparent
+
+	&--success
+		background-color: $success
+		border-color: darken($success, 10%)
+
+	&--danger
+		background-color: $danger
+		border-color: darken($danger, 10%)
+
+	&--unknown
+		background-color: $light
+		border-color: darken($light, 10%)
 
 abbr.is-muted
 	text-decoration: none

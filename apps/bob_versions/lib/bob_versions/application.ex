@@ -8,7 +8,8 @@ defmodule BobVersions.Application do
   def start(_type, _args) do
     children = [
       # BobVersions.Repo,
-      {BobVersions.EtagCachedResources, name: BobVersions.EtagCachedResources}
+      {BobVersions.EtagCachedResources, name: BobVersions.EtagCachedResources},
+      BobVersions.Availability
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: BobVersions.Supervisor)
