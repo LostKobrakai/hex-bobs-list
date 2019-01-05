@@ -23,7 +23,8 @@ defmodule BobVersions.Umbrella.MixProject do
   # and cannot be accessed from applications inside the apps folder
   defp deps do
     [
-      {:distillery, "~> 2.0"}
+      {:distillery, "~> 2.0"},
+      {:toml, "~> 0.5"}
     ]
   end
 end

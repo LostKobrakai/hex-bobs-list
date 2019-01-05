@@ -40,6 +40,19 @@ environment :prod do
   set(vm_args: "rel/vm.args")
 end
 
+environment :vex do
+  set(
+    config_providers: [
+      {Toml.Provider, [path: "${RELEASE_ROOT_DIR}/../configs/config.toml"]}
+    ]
+  )
+
+  set(include_erts: true)
+  set(include_src: false)
+  set(cookie: :"IYPSJO`9?|va<L2Ik>ufH;9drUf~)elv5ISKtKu2Tq/isL,3IkkZ_rLv;QtWGAn@")
+  set(vm_args: "rel/vm.args")
+end
+
 # You may define one or more releases in this file.
 # If you have not set a default release, or selected one
 # when running `mix release`, the first release in the file
@@ -52,6 +65,7 @@ release :bob_versions do
     applications: [
       :runtime_tools,
       :inets,
+      :toml,
       bob_versions: :permanent,
       bob_versions_web: :permanent
     ]
