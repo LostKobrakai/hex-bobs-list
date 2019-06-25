@@ -66,7 +66,9 @@ defmodule BobVersions.Availability.Worker do
   defp update_availability(state) do
     Logger.debug("Update url #{state.url}")
 
-    case :httpc.request(:head, {String.to_charlist(state.url), []}, [], body_format: :binary) do
+    case BobVersions.Http.request(:head, {String.to_charlist(state.url), []}, [],
+           body_format: :binary
+         ) do
       {:ok, {{_version, 200, 'OK'}, _, _}} -> Map.put(state, :availability, :available)
       _ -> Map.put(state, :availability, :unavailable)
     end
