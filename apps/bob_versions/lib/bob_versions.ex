@@ -42,16 +42,30 @@ defmodule BobVersions do
   end
 
   defp line_to_data(line) do
-    with [branch, hex, timestamp] <- String.split(line, " ") do
-      %{
-        download: hex_pm_download_url(branch),
-        version: version_from_string(branch),
-        git: %{
-          sha: hex,
-          url: github_ref_url(hex)
-        },
-        timestamp: parse_datetime(timestamp)
-      }
+    case String.split(line, " ") do
+      [branch, hex, timestamp, checksum | _] ->
+        %{
+          download: hex_pm_download_url(branch),
+          version: version_from_string(branch),
+          git: %{
+            sha: hex,
+            url: github_ref_url(hex)
+          },
+          timestamp: parse_datetime(timestamp),
+          checksum: checksum
+        }
+
+      [branch, hex, timestamp | _] ->
+        %{
+          download: hex_pm_download_url(branch),
+          version: version_from_string(branch),
+          git: %{
+            sha: hex,
+            url: github_ref_url(hex)
+          },
+          timestamp: parse_datetime(timestamp),
+          checksum: ""
+        }
     end
   end
 
