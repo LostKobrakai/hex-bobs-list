@@ -25,11 +25,13 @@ defmodule BobVersions do
     BobVersions.EtagCachedResources.resource(url, cache_timeout: @cache_timeout)
   end
 
-  def text_to_data(string) do
+  def text_to_data(string, opts \\ []) do
+    availability = Keyword.get(opts, :availability, &attach_availability/1)
+
     string
     |> lines_from_string()
     |> Enum.map(&line_to_data/1)
-    |> attach_availability()
+    |> availability.()
     |> Enum.filter(&is_map/1)
     |> Enum.filter(&is_map(&1.version))
     |> group_by_version_and_sort
