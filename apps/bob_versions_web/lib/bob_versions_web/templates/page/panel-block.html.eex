@@ -6,6 +6,11 @@
 	<div class="truncate">
 		<%= @version %><%= if @item.version.otp != @active, do: "-otp-#{@item.version.otp}" %>
 	</div>
+	<%= if @item.checksum != "" do %>
+		<div class="is-size-7 has-text-grey-light truncate" title="<%= @item.checksum %>">
+			<%= @item.checksum %>
+		</div>
+	<% end %>
 	<div class="is-size-7 has-text-grey-light">
 		<time datetime='<%= @item.timestamp |> DateTime.to_iso8601 %>'>
 			<%= @item.timestamp |> Date.to_iso8601 %> <%= @item.timestamp |> Time.to_iso8601 %> UTC
