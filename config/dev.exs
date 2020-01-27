@@ -26,7 +26,7 @@ config :bob_versions_web, BobVersionsWeb.Endpoint,
       "--mode",
       "development",
       "--watch-stdin",
-      cd: Path.expand("../assets", __DIR__)
+      cd: Path.expand("../apps/bob_versions_web/assets", __DIR__)
     ]
   ],
   live_reload: [
