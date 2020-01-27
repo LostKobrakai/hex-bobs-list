@@ -24,14 +24,4 @@ defmodule BobVersionsWeb.ChannelCase do
       @endpoint BobVersionsWeb.Endpoint
     end
   end
-
-  setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(BobVersions.Repo)
-
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(BobVersions.Repo, {:shared, self()})
-    end
-
-    :ok
-  end
 end

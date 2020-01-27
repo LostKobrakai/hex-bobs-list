@@ -16,23 +16,11 @@ defmodule BobVersions.DataCase do
 
   using do
     quote do
-      alias BobVersions.Repo
-
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
       import BobVersions.DataCase
     end
-  end
-
-  setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(BobVersions.Repo)
-
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(BobVersions.Repo, {:shared, self()})
-    end
-
-    :ok
   end
 
   @doc """

@@ -12,7 +12,6 @@ defmodule BobVersions.MixProject do
       elixir: "~> 1.9",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
-      aliases: aliases(),
       deps: deps()
     ]
   end
@@ -29,16 +28,7 @@ defmodule BobVersions.MixProject do
 
   defp deps do
     [
-      {:postgrex, ">= 0.0.0"},
-      {:ecto_sql, "~> 3.0"}
-    ]
-  end
-
-  defp aliases do
-    [
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-      "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate", "test"]
+      {:ecto, "~> 3.0"}
     ]
   end
 end

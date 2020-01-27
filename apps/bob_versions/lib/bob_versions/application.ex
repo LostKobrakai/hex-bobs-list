@@ -7,7 +7,6 @@ defmodule BobVersions.Application do
 
   def start(_type, _args) do
     children = [
-      # BobVersions.Repo,
       {BobVersions.EtagCachedResources, name: BobVersions.EtagCachedResources},
       BobVersions.Availability
     ]

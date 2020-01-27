@@ -12,7 +12,6 @@ config :bob_versions,
 config :phoenix, :json_library, Jason
 
 config :bob_versions_web,
-  ecto_repos: [BobVersions.Repo],
   generators: [context_app: :bob_versions]
 
 # Configures the endpoint
