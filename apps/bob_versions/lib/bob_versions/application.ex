@@ -7,6 +7,7 @@ defmodule BobVersions.Application do
 
   def start(_type, _args) do
     children = [
+      {Phoenix.PubSub, name: BobVersions.PubSub},
       {BobVersions.EtagCachedResources, name: BobVersions.EtagCachedResources},
       BobVersions.Availability
     ]
