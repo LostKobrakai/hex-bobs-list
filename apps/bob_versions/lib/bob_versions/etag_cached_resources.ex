@@ -166,7 +166,7 @@ defmodule BobVersions.EtagCachedResources do
     {:ok, body}
   end
 
-  @spec if_none_match_header(nil | binary) :: headers
+  @spec if_none_match_header(nil | charlist) :: headers
   defp if_none_match_header(nil), do: []
   defp if_none_match_header(etag), do: [{'If-None-Match', etag}]
 end
