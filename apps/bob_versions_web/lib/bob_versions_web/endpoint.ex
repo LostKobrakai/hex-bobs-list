@@ -1,9 +1,18 @@
 defmodule BobVersionsWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :bob_versions_web
 
+  @session_options [
+    store: :cookie,
+    key: "_bob_versions_web_key",
+    signing_salt: "DtJrc3oC"
+  ]
+
   socket "/socket", BobVersionsWeb.UserSocket,
     websocket: true,
     longpoll: false
+
+  socket "/live", Phoenix.LiveView.Socket,
+    websocket: [connect_info: [session: @session_options]]
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -37,10 +46,7 @@ defmodule BobVersionsWeb.Endpoint do
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
-  plug Plug.Session,
-    store: :cookie,
-    key: "_bob_versions_web_key",
-    signing_salt: "DtJrc3oC"
+  plug Plug.Session, @session_options
 
   plug BobVersionsWeb.Router
 end

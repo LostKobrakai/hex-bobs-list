@@ -11,20 +11,7 @@
 			<%= @item.checksum %>
 		</div>
 	<% end %>
-	<div class="is-size-7 has-text-grey-light">
-		<time datetime='<%= @item.timestamp |> DateTime.to_iso8601 %>'>
-			<%= @item.timestamp |> Date.to_iso8601 %> <%= @item.timestamp |> Time.to_iso8601 %> UTC
-		</time>
-	</div>
+	<%= Phoenix.LiveView.Helpers.live_render(@conn, BobVersionsWeb.RelativeTimeLive, id: @item.download, container: {:div, class: "is-size-7 has-text-grey-light"}, session: %{"datetime" => @item.timestamp |> DateTime.to_iso8601}) %>
 </div>
 
-<div>
-	<%= case @item.availability do %>
-		<% :available -> %>
-			<div class="status status--success"></div>
-		<% :unavailable -> %>
-			<div class="status status--danger"></div>
-		<% :undetermined -> %>
-			<div class="status status--unknown"></div>
-	<% end %>
-</div>
+<%= Phoenix.LiveView.Helpers.live_render(@conn, BobVersionsWeb.AvailabilityLive, id: @item.download, container: {:div, []}, session: %{"availability" => @item.availability |> Atom.to_string(), "url" => @item.download}) %>

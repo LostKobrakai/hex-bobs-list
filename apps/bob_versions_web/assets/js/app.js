@@ -10,6 +10,7 @@ import "../css/app.sass"
 // Import dependencies
 //
 import "phoenix_html"
+import "./liveview"
 
 // Import local files
 //
