@@ -6,7 +6,7 @@ defmodule BobVersionsWeb.PageController do
       {_, text} ->
         data = BobVersions.text_to_data(text)
         stable = BobVersions.current_stable()
-        active = get_session(conn, "active_otp_version") || BobVersions.default_otp_version()
+        active = BobVersions.default_otp_version()
         render(conn, "index.html", data: data, active: active, stable: stable)
 
       :error ->

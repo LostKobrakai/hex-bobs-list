@@ -8,13 +8,13 @@ try {
   timezone = "Etc/UTC"
 }
 
-let csrfToken =
-  document
-    .querySelector("meta[name='csrf-token']")
-    .getAttribute("content");
+// let csrfToken =
+//   document
+//     .querySelector("meta[name='csrf-token']")
+//     .getAttribute("content");
 
 let liveSocket = new LiveSocket("/live", Socket, {
-  params: { _csrf_token: csrfToken, timezone: timezone }
+  params: { timezone: timezone }
 });
 
 // connect if there are any LiveViews on the page
