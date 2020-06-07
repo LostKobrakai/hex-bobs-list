@@ -8,6 +8,7 @@ defmodule BobVersionsWeb.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
+      BobVersionsWeb.Telemetry,
       # Start the endpoint when the application starts
       BobVersionsWeb.Endpoint
       # Starts a worker by calling: BobVersionsWeb.Worker.start_link(arg)

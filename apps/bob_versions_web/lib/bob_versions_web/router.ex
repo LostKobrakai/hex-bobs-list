@@ -1,5 +1,6 @@
 defmodule BobVersionsWeb.Router do
   use BobVersionsWeb, :router
+  import Phoenix.LiveDashboard.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -17,6 +18,7 @@ defmodule BobVersionsWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    live_dashboard "/dashboard", metrics: BobVersionsWeb.Telemetry
   end
 
   # Other scopes may use custom stacks.
