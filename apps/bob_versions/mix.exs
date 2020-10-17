@@ -28,8 +28,7 @@ defmodule BobVersions.MixProject do
 
   defp deps do
     [
-      {:phoenix_pubsub, "~> 2.0"},
-      {:ecto, "~> 3.0"}
+      {:phoenix_pubsub, "~> 2.0"}
     ]
   end
 end

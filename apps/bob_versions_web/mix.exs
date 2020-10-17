@@ -38,10 +38,10 @@ defmodule BobVersionsWeb.MixProject do
       {:bob_versions, in_umbrella: true},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.1"},
-      {:telemetry_metrics, "~> 0.4"},
+      {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 0.4"},
-      {:phoenix_live_view, "~> 0.13.0"},
-      {:phoenix_live_dashboard, "~> 0.2"},
+      {:phoenix_live_view, "~> 0.14.0"},
+      {:phoenix_live_dashboard, "~> 0.3"},
       {:floki, ">= 0.0.0", only: :test},
       {:tzdata, "~> 1.0.3"}
     ]
