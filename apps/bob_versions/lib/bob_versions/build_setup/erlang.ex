@@ -16,7 +16,7 @@ defmodule BobVersions.BuildSetup.Erlang do
         version: minor_version,
         minor_version: major_version(minor_version),
         git: values |> List.first() |> Map.get(:git),
-        versions: values
+        versions: Enum.sort_by(values, &sort_versions(&1.version.erlang))
       }
     end)
     |> Enum.group_by(fn
@@ -25,6 +25,32 @@ defmodule BobVersions.BuildSetup.Erlang do
       %{minor_version: "maint"} -> "master"
       _ -> "others"
     end)
+  end
+
+  defp sort_versions("master"), do: 0
+  defp sort_versions("maint"), do: 0
+
+  defp sort_versions(version) do
+    case Regex.named_captures(
+           ~r/^(?>OTP-|maint-)(?<version>[0-9\.]*?)(?>-rc(?<rc>\d+))?$/,
+           version
+         ) do
+      %{"version" => version, "rc" => rc} when rc != "" ->
+        version =
+          version
+          |> String.split(".")
+          |> Enum.map(&String.to_integer/1)
+
+        [version, rc]
+
+      %{"version" => version} ->
+        version =
+          version
+          |> String.split(".")
+          |> Enum.map(&String.to_integer/1)
+
+        [version, 0]
+    end
   end
 
   defp major_version(<<"maint-"::binary, major::binary-size(2)>>), do: "OTP-" <> major

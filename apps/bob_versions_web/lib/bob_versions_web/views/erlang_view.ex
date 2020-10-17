@@ -8,9 +8,35 @@ defmodule BobVersionsWeb.ErlangView do
   end
 
   def sort_by_version(list) do
-    Enum.sort(list, fn %{version: k1}, %{version: k2} ->
-      sort_order(k1, k2, :desc)
-    end)
+    Enum.sort_by(list, &sort_versions(&1.version))
+  end
+
+  defp sort_versions("master"), do: :ok
+  defp sort_versions("maint"), do: :ok
+
+  defp sort_versions(version) do
+    case Regex.named_captures(
+           ~r/^(?>OTP-|maint-)(?<version>[0-9\.]*?)(?>-rc(?<rc>\d+))?$/,
+           version
+         ) do
+      %{"version" => version, "rc" => rc} when rc != "" ->
+        version =
+          version
+          |> String.split(".")
+          |> Enum.map(&String.to_integer/1)
+          |> Enum.map(&Kernel.*(&1, -1))
+
+        [version, rc]
+
+      %{"version" => version} ->
+        version =
+          version
+          |> String.split(".")
+          |> Enum.map(&String.to_integer/1)
+          |> Enum.map(&Kernel.*(&1, -1))
+
+        [version, 0]
+    end
   end
 
   defp sort_order(k1, k2, direction) do
