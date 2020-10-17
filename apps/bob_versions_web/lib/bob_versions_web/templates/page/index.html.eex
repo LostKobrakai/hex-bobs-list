@@ -1,15 +1,23 @@
-<%= for {minor, list} <- sort_by_minor(@data) do %>
-  <section class="section" id="version_<%= minor %>">
-    <div class="container">
-      <h2 class="title has-text-centered"><%= String.trim_leading(minor, "v") %></h2>
-
-      <div class="columns is-multiline is-centered">
-        <%= for item <- sort_by_version(list) do %>
-          <div class="column is-one-third">
-            <%= render "panel.html", Map.merge(assigns, %{item: item}) %>
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-4">
+        <article class="panel">
+          <div class="panel-heading">
+            Elixir
           </div>
-        <% end %>
+          <%= link "View packages", to: Routes.elixir_path(@conn, :index), class: "panel-block" %>
+        </article>
+      </div>
+      <div class="column is-4">
+        <article class="panel">
+          <div class="panel-heading">
+            Erlang
+          </div>
+          <%= link "View packages – Ubuntu", to: Routes.erlang_path(@conn, :show, :ubuntu), class: "panel-block" %>
+          <%= link "View packages – Alpine", to: Routes.erlang_path(@conn, :show, :alpine), class: "panel-block" %>
+        </article>
       </div>
     </div>
-  </section>
-<% end %>
+  </div>
+</section>

@@ -19,22 +19,40 @@ defmodule BobVersions do
     @default_otp_version
   end
 
-  @spec get_bob_builds_file() :: {:ok | :stale, binary} | :error
-  def get_bob_builds_file do
+  @spec get_bob_elixir_builds_file() :: {:ok | :stale, binary} | :error
+  def get_bob_elixir_builds_file do
     url = "https://repo.hex.pm/builds/elixir/builds.txt"
     BobVersions.EtagCachedResources.resource(url, cache_timeout: @cache_timeout)
   end
 
-  def text_to_data(string, opts \\ []) do
+  @spec get_bob_erlang_builds_file(:ubuntu | :alpine) :: {:ok | :stale, binary} | :error
+  def get_bob_erlang_builds_file(distro) do
+    url =
+      case distro do
+        :ubuntu -> "https://repo.hex.pm/builds/otp/ubuntu-14.04/builds.txt"
+        :alpine -> "https://repo.hex.pm/builds/otp/alpine-3.10/builds.txt"
+      end
+
+    BobVersions.EtagCachedResources.resource(url, cache_timeout: @cache_timeout)
+  end
+
+  def text_to_data(setup, string, opts \\ []) do
+    setup =
+      case setup do
+        :elixir -> BobVersions.BuildSetup.Elixir
+        {:erlang, :ubuntu} -> BobVersions.BuildSetup.Erlang.Ubuntu
+        {:erlang, :alpine} -> BobVersions.BuildSetup.Erlang.Alpine
+      end
+
     availability = Keyword.get(opts, :availability, &attach_availability/1)
 
     string
     |> lines_from_string()
-    |> Enum.map(&line_to_data/1)
+    |> Enum.map(&line_to_data(setup, &1))
     |> availability.()
     |> Enum.filter(&is_map/1)
     |> Enum.filter(&is_map(&1.version))
-    |> group_by_version_and_sort
+    |> setup.group_by_version_and_sort()
   end
 
   defp lines_from_string(string) do
@@ -43,15 +61,15 @@ defmodule BobVersions do
     |> Enum.reject(&(&1 in [""]))
   end
 
-  defp line_to_data(line) do
+  defp line_to_data(setup, line) do
     case String.split(line, " ") do
       [branch, hex, timestamp, checksum | _] ->
         %{
-          download: hex_pm_download_url(branch),
-          version: version_from_string(branch),
+          download: hex_pm_download_url(setup, branch),
+          version: version_from_string(setup, branch),
           git: %{
             sha: hex,
-            url: github_ref_url(hex)
+            url: github_ref_url(setup, hex)
           },
           timestamp: parse_datetime(timestamp),
           checksum: checksum
@@ -59,11 +77,11 @@ defmodule BobVersions do
 
       [branch, hex, timestamp | _] ->
         %{
-          download: hex_pm_download_url(branch),
-          version: version_from_string(branch),
+          download: hex_pm_download_url(setup, branch),
+          version: version_from_string(setup, branch),
           git: %{
             sha: hex,
-            url: github_ref_url(hex)
+            url: github_ref_url(setup, hex)
           },
           timestamp: parse_datetime(timestamp),
           checksum: ""
@@ -78,7 +96,7 @@ defmodule BobVersions do
         fn %{download: download} = data ->
           Map.put(data, :availability, BobVersions.Availability.url_availability(download))
         end,
-        max_concurrency: System.schedulers_online() * 4
+        max_concurrency: 1
       )
 
     for {:ok, executed} <- stream, do: executed
@@ -89,14 +107,8 @@ defmodule BobVersions do
     datetime
   end
 
-  defp version_from_string(string) do
-    case Regex.named_captures(~r/^(?<elixir>.*?)(-otp-(?<otp>\d+))?$/, string) do
-      %{"elixir" => elixir, "otp" => otp} when otp != "" ->
-        %{elixir: elixir, otp: otp}
-
-      %{"elixir" => elixir} ->
-        %{elixir: elixir, otp: @default_otp_version}
-    end
+  defp version_from_string(setup, string) do
+    setup.version_from_string(string)
   end
 
   defp minor_version(<<"v"::binary, rest::binary>> = version) do
@@ -108,31 +120,13 @@ defmodule BobVersions do
 
   defp minor_version(other), do: other
 
-  defp group_by_version_and_sort(list) do
-    list
-    |> Enum.group_by(& &1.version.elixir)
-    |> Enum.map(fn {elixir_version, values} ->
-      %{
-        version: elixir_version,
-        minor_version: minor_version(elixir_version),
-        git: values |> List.first() |> Map.get(:git),
-        versions: values
-      }
-    end)
-    |> Enum.group_by(fn
-      %{minor_version: <<"v"::binary, _::binary>> = version} -> version
-      %{minor_version: "master"} -> "master"
-      _ -> "others"
-    end)
+  defp github_ref_url(_, ""), do: nil
+
+  defp github_ref_url(setup, ref) do
+    setup.github_ref_url(ref)
   end
 
-  defp github_ref_url(""), do: nil
-
-  defp github_ref_url(ref) do
-    "https://github.com/elixir-lang/elixir/commit/#{ref}"
-  end
-
-  defp hex_pm_download_url(branch) do
-    "https://repo.hex.pm/builds/elixir/#{branch}.zip"
+  defp hex_pm_download_url(setup, branch) do
+    setup.hex_pm_download_url(branch)
   end
 end

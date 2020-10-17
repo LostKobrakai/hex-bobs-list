@@ -1,7 +1,7 @@
 defmodule BobVersionsTest do
   use ExUnit.Case, async: true
 
-  describe "text_to_data/1" do
+  describe "text_to_data/2 - elixir" do
     test "success V1" do
       string = """
       v0.12.4 543dfdeac80cfaf3483927c189cf9974f1e361eb 2016-06-02T12:43:53Z
@@ -83,7 +83,10 @@ defmodule BobVersionsTest do
                    ]
                  }
                ]
-             } = BobVersions.text_to_data(string, availability: &undetermined_availability/1)
+             } =
+               BobVersions.text_to_data(:elixir, string,
+                 availability: &undetermined_availability/1
+               )
     end
 
     test "success V2" do
@@ -143,7 +146,10 @@ defmodule BobVersionsTest do
                    ]
                  }
                ]
-             } = BobVersions.text_to_data(string, availability: &undetermined_availability/1)
+             } =
+               BobVersions.text_to_data(:elixir, string,
+                 availability: &undetermined_availability/1
+               )
     end
 
     test "does ignore additional data" do
@@ -153,7 +159,99 @@ defmodule BobVersionsTest do
       """
 
       assert %{"v0.12" => [_, _]} =
-               BobVersions.text_to_data(string, availability: &undetermined_availability/1)
+               BobVersions.text_to_data(:elixir, string,
+                 availability: &undetermined_availability/1
+               )
+    end
+  end
+
+  describe "text_to_data/2 - erlang" do
+    test "success V1" do
+      string = """
+      OTP-19.2 3473ecd83a7bbe7e0bebb865f25dddb93e3bf10f 2020-03-18T17:30:34Z
+      OTP-19.3.6.9 3d0c4930775cf2ab304d5e4701b41ffc2936ce53 2020-03-18T17:42:18Z
+      OTP-20.0 040bdce67f88d833bfb59adae130a4ffb4c180f0 2020-03-18T17:42:46Z
+      """
+
+      assert %{
+               "OTP-19" => [
+                 %{
+                   git: %{
+                     sha: "3473ecd83a7bbe7e0bebb865f25dddb93e3bf10f",
+                     url:
+                       "https://github.com/erlang/otp/commit/3473ecd83a7bbe7e0bebb865f25dddb93e3bf10f"
+                   },
+                   minor_version: "OTP-19",
+                   version: "OTP-19.2",
+                   versions: [
+                     %{
+                       availability: :undetermined,
+                       checksum: "",
+                       download: "https://repo.hex.pm/builds/otp/ubuntu-14.04/OTP-19.2.tar.gz",
+                       git: %{
+                         sha: "3473ecd83a7bbe7e0bebb865f25dddb93e3bf10f",
+                         url:
+                           "https://github.com/erlang/otp/commit/3473ecd83a7bbe7e0bebb865f25dddb93e3bf10f"
+                       },
+                       timestamp: ~U[2020-03-18T17:30:34Z],
+                       version: %{erlang: "OTP-19.2"}
+                     }
+                   ]
+                 },
+                 %{
+                   git: %{
+                     sha: "3d0c4930775cf2ab304d5e4701b41ffc2936ce53",
+                     url:
+                       "https://github.com/erlang/otp/commit/3d0c4930775cf2ab304d5e4701b41ffc2936ce53"
+                   },
+                   minor_version: "OTP-19",
+                   version: "OTP-19.3",
+                   versions: [
+                     %{
+                       availability: :undetermined,
+                       checksum: "",
+                       download:
+                         "https://repo.hex.pm/builds/otp/ubuntu-14.04/OTP-19.3.6.9.tar.gz",
+                       git: %{
+                         sha: "3d0c4930775cf2ab304d5e4701b41ffc2936ce53",
+                         url:
+                           "https://github.com/erlang/otp/commit/3d0c4930775cf2ab304d5e4701b41ffc2936ce53"
+                       },
+                       timestamp: ~U[2020-03-18T17:42:18Z],
+                       version: %{erlang: "OTP-19.3.6.9"}
+                     }
+                   ]
+                 }
+               ],
+               "OTP-20" => [
+                 %{
+                   git: %{
+                     sha: "040bdce67f88d833bfb59adae130a4ffb4c180f0",
+                     url:
+                       "https://github.com/erlang/otp/commit/040bdce67f88d833bfb59adae130a4ffb4c180f0"
+                   },
+                   minor_version: "OTP-20",
+                   version: "OTP-20.0",
+                   versions: [
+                     %{
+                       availability: :undetermined,
+                       checksum: "",
+                       download: "https://repo.hex.pm/builds/otp/ubuntu-14.04/OTP-20.0.tar.gz",
+                       git: %{
+                         sha: "040bdce67f88d833bfb59adae130a4ffb4c180f0",
+                         url:
+                           "https://github.com/erlang/otp/commit/040bdce67f88d833bfb59adae130a4ffb4c180f0"
+                       },
+                       timestamp: ~U[2020-03-18T17:42:46Z],
+                       version: %{erlang: "OTP-20.0"}
+                     }
+                   ]
+                 }
+               ]
+             } =
+               BobVersions.text_to_data({:erlang, :ubuntu}, string,
+                 availability: &undetermined_availability/1
+               )
     end
   end
 

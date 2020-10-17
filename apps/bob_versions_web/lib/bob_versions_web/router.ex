@@ -18,6 +18,8 @@ defmodule BobVersionsWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/elixir", ElixirController, :index
+    get "/erlang/:distro", ErlangController, :show
     live_dashboard "/dashboard", metrics: BobVersionsWeb.Telemetry
   end
 

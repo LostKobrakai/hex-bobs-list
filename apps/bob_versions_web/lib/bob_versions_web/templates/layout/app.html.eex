@@ -18,29 +18,15 @@
       <div class="hero-body">
         <div class="container has-text-centered">
           <h1 class="title">
-            Bob's List
+            <%= @title %>
           </h1>
           <div class="subtitle">
-            Overview of all available elixir packages provided by hex
+            <%= @subtitle %>
           </div>
         </div>
       </div>
 
-      <%= if assigns[:data] do %>
-        <div class="hero-foot">
-          <nav class="tabs is-boxed is-fullwidth">
-            <div class="container">
-              <ul>
-                <%= for {minor, _list} <- BobVersionsWeb.PageView.sort_by_minor(@data), match?(<<"v"::binary, _::binary>>, minor) || ("master" == minor) do %>
-                  <li class='<%= if minor == @stable, do: "is-active" %>'>
-                    <a href="#version_<%= minor %>"><%= String.trim_leading(minor, "v") %></a>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
-          </nav>
-        </div>
-      <% end %>
+      <%= if assigns[:data], do: render_existing(@view_module, "tabs.html", assigns) %>
     </section>
 
     <main role="main">

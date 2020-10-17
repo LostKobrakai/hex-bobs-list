@@ -1,0 +1,13 @@
+<div class="hero-foot">
+  <nav class="tabs is-boxed is-fullwidth">
+    <div class="container">
+      <ul>
+        <%= for {minor, _list} <- sort_by_minor(@data), match?(<<"OTP-"::binary, _::binary>>, minor) || ("master" == minor) do %>
+          <li class='<%= if minor == @stable, do: "is-active" %>'>
+            <a href="#version_<%= minor %>"><%= String.trim_leading(minor, "OTP-") %></a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
+</div>
