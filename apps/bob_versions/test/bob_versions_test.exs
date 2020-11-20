@@ -249,7 +249,7 @@ defmodule BobVersionsTest do
                  }
                ]
              } =
-               BobVersions.text_to_data({:erlang, :ubuntu}, string,
+               BobVersions.text_to_data({:erlang, :ubuntu_14}, string,
                  availability: &undetermined_availability/1
                )
     end
