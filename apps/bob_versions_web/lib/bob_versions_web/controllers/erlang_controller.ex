@@ -1,7 +1,14 @@
 defmodule BobVersionsWeb.ErlangController do
   use BobVersionsWeb, :controller
 
-  plug :valid_distro_or_404, %{"ubuntu" => :ubuntu, "alpine" => :alpine} when action == :show
+  plug :valid_distro_or_404,
+       %{
+         "ubuntu_14" => :ubuntu_14,
+         "ubuntu_16" => :ubuntu_16,
+         "ubuntu_18" => :ubuntu_18,
+         "ubuntu_20" => :ubuntu_20
+       }
+       when action == :show
 
   def show(conn, _params) do
     case BobVersions.get_bob_erlang_builds_file(conn.assigns.distro) do
@@ -25,8 +32,10 @@ defmodule BobVersionsWeb.ErlangController do
     end
   end
 
-  defp distro_label(:ubuntu), do: "Ubuntu 14.04"
-  defp distro_label(:alpine), do: "Alpine 3.10"
+  defp distro_label(:ubuntu_14), do: "Ubuntu 14.04"
+  defp distro_label(:ubuntu_16), do: "Ubuntu 16.04"
+  defp distro_label(:ubuntu_18), do: "Ubuntu 18.04"
+  defp distro_label(:ubuntu_20), do: "Ubuntu 20.04"
 
   defp valid_distro_or_404(conn, valid) do
     distro = conn.params["distro"]

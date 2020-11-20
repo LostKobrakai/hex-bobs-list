@@ -14,8 +14,10 @@
           <div class="panel-heading">
             Erlang
           </div>
-          <%= link "View packages – Ubuntu", to: Routes.erlang_path(@conn, :show, :ubuntu), class: "panel-block" %>
-          <%= link "View packages – Alpine", to: Routes.erlang_path(@conn, :show, :alpine), class: "panel-block" %>
+          <%= link "View packages – Ubuntu 14.04", to: Routes.erlang_path(@conn, :show, :ubuntu_14), class: "panel-block" %>
+          <%= link "View packages – Ubuntu 16.04", to: Routes.erlang_path(@conn, :show, :ubuntu_16), class: "panel-block" %>
+          <%= link "View packages – Ubuntu 18.04", to: Routes.erlang_path(@conn, :show, :ubuntu_18), class: "panel-block" %>
+          <%= link "View packages – Ubuntu 20.04", to: Routes.erlang_path(@conn, :show, :ubuntu_20), class: "panel-block" %>
         </article>
       </div>
     </div>

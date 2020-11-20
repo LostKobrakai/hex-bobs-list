@@ -29,8 +29,10 @@ defmodule BobVersions do
   def get_bob_erlang_builds_file(distro) do
     url =
       case distro do
-        :ubuntu -> "https://repo.hex.pm/builds/otp/ubuntu-14.04/builds.txt"
-        :alpine -> "https://repo.hex.pm/builds/otp/alpine-3.10/builds.txt"
+        :ubuntu_14 -> "https://repo.hex.pm/builds/otp/ubuntu-14.04/builds.txt"
+        :ubuntu_16 -> "https://repo.hex.pm/builds/otp/ubuntu-16.04/builds.txt"
+        :ubuntu_18 -> "https://repo.hex.pm/builds/otp/ubuntu-18.04/builds.txt"
+        :ubuntu_20 -> "https://repo.hex.pm/builds/otp/ubuntu-20.04/builds.txt"
       end
 
     BobVersions.EtagCachedResources.resource(url, cache_timeout: @cache_timeout)
@@ -40,8 +42,10 @@ defmodule BobVersions do
     setup =
       case setup do
         :elixir -> BobVersions.BuildSetup.Elixir
-        {:erlang, :ubuntu} -> BobVersions.BuildSetup.Erlang.Ubuntu
-        {:erlang, :alpine} -> BobVersions.BuildSetup.Erlang.Alpine
+        {:erlang, :ubuntu_14} -> BobVersions.BuildSetup.Erlang.Ubuntu14
+        {:erlang, :ubuntu_16} -> BobVersions.BuildSetup.Erlang.Ubuntu16
+        {:erlang, :ubuntu_18} -> BobVersions.BuildSetup.Erlang.Ubuntu18
+        {:erlang, :ubuntu_20} -> BobVersions.BuildSetup.Erlang.Ubuntu20
       end
 
     availability = Keyword.get(opts, :availability, &attach_availability/1)
