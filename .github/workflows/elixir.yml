@@ -59,7 +59,7 @@ jobs:
           ref: master # Checkout out master instead of the latest commit
           fetch-depth: 0 # Checkout the whole branch
           
-      - uses: mhanberg/gigalixir-action@v0.2.1
+      - uses: mhanberg/gigalixir-action@v0.4.3
         with:
           GIGALIXIR_USERNAME: ${{ secrets.GIGALIXIR_USERNAME }}
           GIGALIXIR_PASSWORD: ${{ secrets.GIGALIXIR_PASSWORD }}
