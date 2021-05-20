@@ -39,10 +39,10 @@ jobs:
           key: ${{ runner.os }}-mix-build-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
           restore-keys: |
             ${{ runner.os }}-mix-build
-      - uses: actions/setup-elixir@v1
+      - uses: erlef/setup-beam@v1
         with:
           otp-version: 22.3
-          elixir-version: 1.10.3
+          elixir-version: 1.11.4
       - run: mix deps.get
       - run: mix test
 
@@ -63,10 +63,9 @@ jobs:
         with:
           python-version: 3.8.1
           
-      - uses: mhanberg/gigalixir-action@v0.4.3
+      - uses: mhanberg/gigalixir-action@v0.6.0
         with:
           GIGALIXIR_USERNAME: ${{ secrets.GIGALIXIR_USERNAME }}
           GIGALIXIR_PASSWORD: ${{ secrets.GIGALIXIR_PASSWORD }}
           GIGALIXIR_APP: ${{ secrets.GIGALIXIR_APP }}
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           MIGRATIONS: false  # defaults to true
