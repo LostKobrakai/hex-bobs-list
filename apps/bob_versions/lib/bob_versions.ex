@@ -9,7 +9,7 @@ defmodule BobVersions do
 
   @cache_timeout :timer.minutes(15)
   @default_otp_version "Default"
-  @current_stable "v1.12"
+  @current_stable "v1.13"
 
   def current_stable do
     @current_stable
@@ -33,6 +33,7 @@ defmodule BobVersions do
         :ubuntu_16 -> "https://repo.hex.pm/builds/otp/ubuntu-16.04/builds.txt"
         :ubuntu_18 -> "https://repo.hex.pm/builds/otp/ubuntu-18.04/builds.txt"
         :ubuntu_20 -> "https://repo.hex.pm/builds/otp/ubuntu-20.04/builds.txt"
+        :ubuntu_22 -> "https://repo.hex.pm/builds/otp/ubuntu-22.04/builds.txt"
       end
 
     BobVersions.EtagCachedResources.resource(url, cache_timeout: @cache_timeout)
