@@ -13,7 +13,8 @@ defmodule BobVersionsWeb.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      aliases: aliases()
     ]
   end
 
@@ -47,6 +48,16 @@ defmodule BobVersionsWeb.MixProject do
       {:esbuild, "~> 0.5.0", runtime: Mix.env() == :dev},
       {:dart_sass, "~> 0.5.0", runtime: Mix.env() == :dev},
       {:bulma, "0.9.3", runtime: Mix.env() == :dev}
+    ]
+  end
+
+  defp aliases do
+    [
+      "assets.deploy": [
+        "esbuild default --minify",
+        "sass default --no-source-map --style=compressed",
+        "phx.digest"
+      ]
     ]
   end
 end
