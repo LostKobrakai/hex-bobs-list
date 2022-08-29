@@ -11,7 +11,7 @@ defmodule BobVersionsWeb.MixProject do
       lockfile: "../../mix.lock",
       elixir: "~> 1.9",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+      compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -29,19 +29,19 @@ defmodule BobVersionsWeb.MixProject do
 
   defp deps do
     [
-      {:phoenix, "~> 1.5"},
+      {:phoenix, "~> 1.6"},
       {:phoenix_pubsub, "~> 2.0"},
       {:phoenix_ecto, "~> 4.0"},
-      {:phoenix_html, "~> 2.11"},
+      {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
       {:bob_versions, in_umbrella: true},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.1"},
       {:telemetry_metrics, "~> 0.6"},
-      {:telemetry_poller, "~> 0.4"},
-      {:phoenix_live_view, "~> 0.15.0"},
-      {:phoenix_live_dashboard, "~> 0.4"},
+      {:telemetry_poller, "~> 1.0"},
+      {:phoenix_live_view, "~> 0.17.0"},
+      {:phoenix_live_dashboard, "~> 0.6"},
       {:floki, ">= 0.0.0", only: :test},
       {:tzdata, "~> 1.0"}
     ]
