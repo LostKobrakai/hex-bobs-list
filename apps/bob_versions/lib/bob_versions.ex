@@ -47,6 +47,7 @@ defmodule BobVersions do
         {:erlang, :ubuntu_16} -> BobVersions.BuildSetup.Erlang.Ubuntu16
         {:erlang, :ubuntu_18} -> BobVersions.BuildSetup.Erlang.Ubuntu18
         {:erlang, :ubuntu_20} -> BobVersions.BuildSetup.Erlang.Ubuntu20
+        {:erlang, :ubuntu_22} -> BobVersions.BuildSetup.Erlang.Ubuntu22
       end
 
     availability = Keyword.get(opts, :availability, &attach_availability/1)
