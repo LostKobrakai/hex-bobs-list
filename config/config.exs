@@ -24,6 +24,22 @@ config :bob_versions_web, BobVersionsWeb.Endpoint,
   pubsub_server: BobVersions.PubSub,
   live_view: [signing_salt: "N3nxrR5NPzhdvM1TzkDlqd7GpK1hdq+A"]
 
+config :esbuild,
+  version: "0.15.5",
+  default: [
+    args: ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets),
+    cd: Path.expand("../apps/bob_versions_web/assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+
+config :dart_sass,
+  version: "1.54.5",
+  default: [
+    args: ~w(css/app.sass ../priv/static/assets/app.css),
+    cd: Path.expand("../apps/bob_versions_web/assets", __DIR__),
+    env: %{"SASS_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

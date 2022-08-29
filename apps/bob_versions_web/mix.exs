@@ -43,7 +43,10 @@ defmodule BobVersionsWeb.MixProject do
       {:phoenix_live_view, "~> 0.17.0"},
       {:phoenix_live_dashboard, "~> 0.6"},
       {:floki, ">= 0.0.0", only: :test},
-      {:tzdata, "~> 1.0"}
+      {:tzdata, "~> 1.0"},
+      {:esbuild, "~> 0.5.0", runtime: Mix.env() == :dev},
+      {:dart_sass, "~> 0.5.0", runtime: Mix.env() == :dev},
+      {:bulma, "0.9.3", runtime: Mix.env() == :dev}
     ]
   end
 end

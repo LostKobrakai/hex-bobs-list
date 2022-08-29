@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Bob's List</title>
-    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/assets/app.css") %>" phx-track-static />
     <%#= csrf_meta_tag() %>
-    <script type="text/javascript" src='<%= Routes.static_path(@conn, "/js/app.js") %>' defer></script>
+    <script type="text/javascript" src='<%= Routes.static_path(@conn, "/assets/app.js") %>' defer phx-track-static ></script>
   </head>
   <body>
     <section class="hero is-medium is-primary is-bold">
@@ -26,7 +26,7 @@
         </div>
       </div>
 
-      <%= if assigns[:data], do: render_existing(@view_module, "tabs.html", assigns) %>
+      <%= if function_exported?(view_module(@conn), :tabs, 1), do: view_module(@conn).tabs(assigns) %>
     </section>
 
     <main role="main">

@@ -1,6 +1,24 @@
 defmodule BobVersionsWeb.ErlangView do
   use BobVersionsWeb, :view
 
+  def tabs(assigns) do
+    ~H"""
+    <div class="hero-foot">
+      <nav class="tabs is-boxed is-fullwidth">
+        <div class="container">
+          <ul>
+            <%= for {minor, _list} <- sort_by_minor(@data), match?(<<"OTP-"::binary, _::binary>>, minor) || ("master" == minor) do %>
+              <li class={if minor == @stable, do: "is-active"}>
+                <a href={"#version_#{minor}"}><%= String.trim_leading(minor, "OTP-") %></a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    """
+  end
+
   def sort_by_minor(list) do
     Enum.sort(list, fn {k1, _v1}, {k2, _v2} ->
       sort_order(k1, k2, :desc)
