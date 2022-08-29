@@ -19,7 +19,7 @@ defmodule BobVersions.MixProject do
   def application do
     [
       mod: {BobVersions.Application, []},
-      extra_applications: [:logger, :runtime_tools, :inets]
+      extra_applications: [:logger, :runtime_tools, :inets, :public_key]
     ]
   end
 

@@ -116,15 +116,6 @@ defmodule BobVersions do
     setup.version_from_string(string)
   end
 
-  defp minor_version(<<"v"::binary, rest::binary>> = version) do
-    case Version.parse(rest) do
-      {:ok, version} -> "v#{version.major}.#{version.minor}"
-      _ -> version
-    end
-  end
-
-  defp minor_version(other), do: other
-
   defp github_ref_url(_, ""), do: nil
 
   defp github_ref_url(setup, ref) do

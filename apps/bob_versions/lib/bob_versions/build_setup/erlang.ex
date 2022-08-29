@@ -54,7 +54,10 @@ defmodule BobVersions.BuildSetup.Erlang do
   end
 
   defp major_version(<<"maint-"::binary, major::binary-size(2)>>), do: "OTP-" <> major
-  defp major_version(<<"OTP-"::binary, major::binary-size(2), rest::binary>>), do: "OTP-" <> major
+
+  defp major_version(<<"OTP-"::binary, major::binary-size(2), _rest::binary>>),
+    do: "OTP-" <> major
+
   defp major_version(other), do: other
 
   defp minor_version(<<"OTP-"::binary, rest::binary>> = version) do
