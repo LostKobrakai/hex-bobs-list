@@ -1,0 +1,30 @@
+<section class="hero is-medium is-primary is-bold">
+  <div class="hero-head">
+    <.nav conn={@conn} />
+  </div>
+
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title">
+        <%= @title %>
+      </h1>
+      <div class="subtitle">
+        <%= @subtitle %>
+      </div>
+    </div>
+  </div>
+
+  <%= if function_exported?(view_module(@conn), :tabs, 1), do: view_module(@conn).tabs(assigns) %>
+</section>
+
+<main role="main">
+  <%= @inner_content %>
+</main>
+
+<footer class="footer">
+  <div class="content has-text-centered">
+    <p>
+      <strong>Built</strong> by <a href="https://kobrakai.de">Benjamin Milde</a>. Hosted on <a href="https://gigalixir.com/">gigalixir</a>'s free tier.
+    </p>
+  </div>
+</footer>
