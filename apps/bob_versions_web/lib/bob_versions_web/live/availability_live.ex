@@ -13,7 +13,7 @@ defmodule BobVersionsWeb.AvailabilityLive do
   defp status("undetermined"), do: "status--unknown"
 
   defp status(status) do
-    Logger.warn("Invalid status: #{status}")
+    Logger.warning("Invalid status: #{status}")
     "status--unknown"
   end
 
