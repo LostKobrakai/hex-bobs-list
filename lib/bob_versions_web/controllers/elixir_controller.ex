@@ -20,7 +20,7 @@ defmodule BobVersionsWeb.ElixirController do
 
       :error ->
         conn
-        |> put_view(BobVersionsWeb.ErrorView)
+        |> put_view(BobVersionsWeb.ErrorHTML)
         |> render("no_resource.html")
     end
   end

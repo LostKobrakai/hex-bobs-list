@@ -1,6 +1,7 @@
 defmodule BobVersionsWeb.ErlangView do
-  use BobVersionsWeb, :view
-  import Phoenix.Component
+  use BobVersionsWeb, :html
+
+  embed_templates "../templates/erlang/*"
 
   def tabs(assigns) do
     ~H"""

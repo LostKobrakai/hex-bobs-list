@@ -1,6 +1,7 @@
 defmodule BobVersionsWeb.ElixirView do
-  use BobVersionsWeb, :view
-  import Phoenix.Component
+  use BobVersionsWeb, :html
+
+  embed_templates "../templates/elixir/*"
 
   def tabs(assigns) do
     ~H"""

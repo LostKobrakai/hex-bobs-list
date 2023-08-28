@@ -33,7 +33,6 @@ defmodule BobVersions.MixProject do
   defp deps do
     [
       {:phoenix, "~> 1.7.7"},
-      {:phoenix_view, "~> 2.0"},
       {:phoenix_html, "~> 3.3"},
       {:phoenix_ecto, "~> 4.4"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},

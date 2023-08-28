@@ -1,0 +1,11 @@
+<section :for={{minor, list} <- sort_by_minor(@data)} class="section" id={"version_#{minor}"}>
+  <div class="container">
+    <h2 class="title has-text-centered"><%= String.trim_leading(minor, "v") %></h2>
+
+    <div class="columns is-multiline is-centered">
+      <div :for={item <- sort_by_version(list)} class="column is-one-third">
+        <.panel conn={@conn} active={@active} item={item} />
+      </div>
+    </div>
+  </div>
+</section>
