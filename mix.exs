@@ -47,7 +47,9 @@ defmodule BobVersions.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:tzdata, "~> 1.0"},
       {:dart_sass, "~> 0.7.0", runtime: Mix.env() == :dev},
-      {:bulma, "0.9.4", runtime: Mix.env() == :dev}
+      {:bulma, "0.9.4", runtime: Mix.env() == :dev},
+      {:phoenix_storybook, "~> 0.5.6"},
+      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev}
     ]
   end
 
@@ -65,6 +67,7 @@ defmodule BobVersions.MixProject do
       "assets.deploy": [
         "sass default --no-source-map --style=compressed",
         "esbuild default --minify",
+        "tailwind storybook --minify",
         "phx.digest"
       ]
     ]
