@@ -17,6 +17,8 @@ config :bob_versions, BobVersionsWeb.Endpoint,
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
     # tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]},
+
+    storybook_tailwind: {Tailwind, :install_and_run, [:storybook, ~w(--watch)]},
     sass:
       {DartSass, :install_and_run,
        [:default, ~w(--embed-source-map --source-map-urls=absolute --watch)]}
@@ -51,7 +53,8 @@ config :bob_versions, BobVersionsWeb.Endpoint,
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/bob_versions_web/(controllers|live|components|templates|views)/.*(ex|heex)$"
+      ~r"lib/bob_versions_web/(controllers|live|components|templates|views)/.*(ex|heex)$",
+      ~r"storybook/.*(exs)$"
     ]
   ]
 
