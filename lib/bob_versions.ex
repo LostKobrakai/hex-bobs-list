@@ -34,6 +34,7 @@ defmodule BobVersions do
         :ubuntu_18 -> "https://repo.hex.pm/builds/otp/ubuntu-18.04/builds.txt"
         :ubuntu_20 -> "https://repo.hex.pm/builds/otp/ubuntu-20.04/builds.txt"
         :ubuntu_22 -> "https://repo.hex.pm/builds/otp/ubuntu-22.04/builds.txt"
+        :ubuntu_24 -> "https://repo.hex.pm/builds/otp/ubuntu-24.04/builds.txt"
       end
 
     BobVersions.EtagCachedResources.resource(url, cache_timeout: @cache_timeout)
@@ -48,6 +49,7 @@ defmodule BobVersions do
         {:erlang, :ubuntu_18} -> BobVersions.BuildSetup.Erlang.Ubuntu18
         {:erlang, :ubuntu_20} -> BobVersions.BuildSetup.Erlang.Ubuntu20
         {:erlang, :ubuntu_22} -> BobVersions.BuildSetup.Erlang.Ubuntu22
+        {:erlang, :ubuntu_24} -> BobVersions.BuildSetup.Erlang.Ubuntu24
       end
 
     availability = Keyword.get(opts, :availability, &attach_availability/1)

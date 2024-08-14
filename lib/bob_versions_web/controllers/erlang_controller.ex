@@ -7,7 +7,8 @@ defmodule BobVersionsWeb.ErlangController do
          "ubuntu_16" => :ubuntu_16,
          "ubuntu_18" => :ubuntu_18,
          "ubuntu_20" => :ubuntu_20,
-         "ubuntu_22" => :ubuntu_22
+         "ubuntu_22" => :ubuntu_22,
+         "ubuntu_24" => :ubuntu_24
        }
        when action == :show
 
@@ -40,6 +41,7 @@ defmodule BobVersionsWeb.ErlangController do
   defp distro_label(:ubuntu_18), do: "Ubuntu 18.04"
   defp distro_label(:ubuntu_20), do: "Ubuntu 20.04"
   defp distro_label(:ubuntu_22), do: "Ubuntu 22.04"
+  defp distro_label(:ubuntu_24), do: "Ubuntu 24.04"
 
   defp valid_distro_or_404(conn, valid) do
     distro = conn.params["distro"]
