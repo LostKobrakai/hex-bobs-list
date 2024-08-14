@@ -3,8 +3,8 @@ defmodule BobVersionsWeb.AvailabilityLive do
   require Logger
 
   def render(assigns) do
-    ~L"""
-    <div class="status <%= status(@availability) %>"></div>
+    ~H"""
+    <div class={"status #{status(@availability)}"}></div>
     """
   end
 

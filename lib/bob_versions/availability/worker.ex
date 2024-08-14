@@ -70,7 +70,7 @@ defmodule BobVersions.Availability.Worker do
       case BobVersions.Http.request(:head, {String.to_charlist(state.url), []}, [],
              body_format: :binary
            ) do
-        {:ok, {{_version, 200, 'OK'}, _, _}} -> :available
+         {:ok, {{_version, 200, ~c"OK"}, _, _}} -> :available
         _ -> :unavailable
       end
 

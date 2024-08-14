@@ -135,9 +135,14 @@ defmodule BobVersions.EtagCachedResources do
 
     result =
       case BobVersions.Http.request(method, {url_char, headers}, [], body_format: :binary) do
-        {:ok, {{_version, 200, 'OK'}, headers, body}} -> {:ok, headers, body}
-        {:ok, {{_version, 304, 'Not Modified'}, headers, _body}} -> {:ok, headers, :not_modified}
-        _ -> :error
+        {:ok, {{_version, 200, ~c"OK"}, headers, body}} ->
+          {:ok, headers, body}
+
+        {:ok, {{_version, 304, ~c"Not Modified"}, headers, _body}} ->
+          {:ok, headers, :not_modified}
+
+        _ ->
+          :error
       end
 
     case result do
@@ -149,7 +154,7 @@ defmodule BobVersions.EtagCachedResources do
   @spec update_table(url, headers, :not_modified, map) :: {:ok, :not_modified} | :error
   @spec update_table(url, headers, binary, map) :: {:ok, binary} | :error
   defp update_table(url, headers, :not_modified, %{method: method}) do
-    etag = :proplists.get_value('etag', headers)
+    etag = :proplists.get_value(~c"etag", headers)
     timestamp = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
 
     if :ets.update_element(@ets_table, {url, method}, [{2, timestamp}, {3, etag}]) do
@@ -160,7 +165,7 @@ defmodule BobVersions.EtagCachedResources do
   end
 
   defp update_table(url, headers, body, %{method: method}) do
-    etag = :proplists.get_value('etag', headers)
+    etag = :proplists.get_value(~c"etag", headers)
     timestamp = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
     :ets.insert(@ets_table, {{url, method}, timestamp, etag, body})
     {:ok, body}
@@ -168,5 +173,5 @@ defmodule BobVersions.EtagCachedResources do
 
   @spec if_none_match_header(nil | charlist) :: headers
   defp if_none_match_header(nil), do: []
-  defp if_none_match_header(etag), do: [{'If-None-Match', etag}]
+  defp if_none_match_header(etag), do: [{~c"If-None-Match", etag}]
 end

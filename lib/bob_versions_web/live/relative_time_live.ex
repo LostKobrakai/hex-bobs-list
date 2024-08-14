@@ -2,8 +2,8 @@ defmodule BobVersionsWeb.RelativeTimeLive do
   use Phoenix.LiveView
 
   def render(assigns) do
-    ~L"""
-    <time datetime="<%= @datetime |> DateTime.to_iso8601 %>" title="<%= format_datetime(@datetime) %>">
+    ~H"""
+    <time datetime={DateTime.to_iso8601(@datetime)} title={format_datetime(@datetime)}>
       <%= format_datetime(@datetime_shifted) %>
     </time>
     """
