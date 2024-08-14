@@ -2,14 +2,14 @@ name: test
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    env: 
+    env:
       MIX_ENV: test
 
     # services:
@@ -43,15 +43,15 @@ jobs:
             ${{ runner.os }}-mix-build
       - uses: erlef/setup-beam@v1
         with:
-          otp-version: 25.3
-          elixir-version: 1.15.4
+          otp-version: 27.0.1
+          elixir-version: 1.17.2-otp-27
       - run: mix deps.get --only test
       - run: mix compile --warnings-as-errors
       - run: mix test
 
   deploy:
     if: github.event_name == 'push'
-    
+
     needs: test
 
     runs-on: ubuntu-latest
@@ -64,11 +64,11 @@ jobs:
 
       - uses: actions/setup-python@v2
         with:
-          python-version: '3.8'
-          
+          python-version: "3.8"
+
       - uses: mhanberg/gigalixir-action@v0.6.1
         with:
           GIGALIXIR_USERNAME: ${{ secrets.GIGALIXIR_USERNAME }}
           GIGALIXIR_PASSWORD: ${{ secrets.GIGALIXIR_PASSWORD }}
           GIGALIXIR_APP: ${{ secrets.GIGALIXIR_APP }}
-          MIGRATIONS: false  # defaults to true
+          MIGRATIONS: false # defaults to true
