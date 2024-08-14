@@ -9,7 +9,7 @@ defmodule BobVersions do
 
   @cache_timeout :timer.minutes(15)
   @default_otp_version "Default"
-  @current_stable "v1.15"
+  @current_stable "v1.17"
 
   def current_stable do
     @current_stable
