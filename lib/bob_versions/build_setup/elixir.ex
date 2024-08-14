@@ -46,6 +46,6 @@ defmodule BobVersions.BuildSetup.Elixir do
   end
 
   def hex_pm_download_url(branch) do
-    "https://repo.hex.pm/builds/elixir/#{branch}.zip"
+    "https://builds.hex.pm/builds/elixir/#{branch}.zip"
   end
 end
