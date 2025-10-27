@@ -6,7 +6,7 @@ defmodule BobVersions.EtagCachedResources do
   ## Usage
 
       {:ok, pid} = BobVersions.EtagCachedResources.start_link()
-      url = "https://builds.hex.pm/builds/elixir/builds.txt"
+      url = "https://repo.hex.pm/builds/elixir/builds.txt"
       # Downloads resource
       {:ok, _} = BobVersions.EtagCachedResources.resource(url)
       # Serves cached content

@@ -21,7 +21,7 @@ defmodule BobVersions do
 
   @spec get_bob_elixir_builds_file() :: {:ok | :stale, binary} | :error
   def get_bob_elixir_builds_file do
-    url = "https://builds.hex.pm/builds/elixir/builds.txt"
+    url = "https://repo.hex.pm/builds/elixir/builds.txt"
     BobVersions.EtagCachedResources.resource(url, cache_timeout: @cache_timeout)
   end
 
@@ -29,12 +29,12 @@ defmodule BobVersions do
   def get_bob_erlang_builds_file(distro) do
     url =
       case distro do
-        :ubuntu_14 -> "https://builds.hex.pm/builds/otp/ubuntu-14.04/builds.txt"
-        :ubuntu_16 -> "https://builds.hex.pm/builds/otp/ubuntu-16.04/builds.txt"
-        :ubuntu_18 -> "https://builds.hex.pm/builds/otp/ubuntu-18.04/builds.txt"
-        :ubuntu_20 -> "https://builds.hex.pm/builds/otp/ubuntu-20.04/builds.txt"
-        :ubuntu_22 -> "https://builds.hex.pm/builds/otp/ubuntu-22.04/builds.txt"
-        :ubuntu_24 -> "https://builds.hex.pm/builds/otp/ubuntu-24.04/builds.txt"
+        :ubuntu_14 -> "https://repo.hex.pm/builds/otp/ubuntu-14.04/builds.txt"
+        :ubuntu_16 -> "https://repo.hex.pm/builds/otp/ubuntu-16.04/builds.txt"
+        :ubuntu_18 -> "https://repo.hex.pm/builds/otp/ubuntu-18.04/builds.txt"
+        :ubuntu_20 -> "https://repo.hex.pm/builds/otp/ubuntu-20.04/builds.txt"
+        :ubuntu_22 -> "https://repo.hex.pm/builds/otp/ubuntu-22.04/builds.txt"
+        :ubuntu_24 -> "https://repo.hex.pm/builds/otp/ubuntu-24.04/builds.txt"
       end
 
     BobVersions.EtagCachedResources.resource(url, cache_timeout: @cache_timeout)

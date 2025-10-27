@@ -23,7 +23,7 @@ defmodule BobVersionsTest do
                      %{
                        availability: :undetermined,
                        checksum: "",
-                       download: "https://builds.hex.pm/builds/elixir/v0.12.4.zip",
+                       download: "https://repo.hex.pm/builds/elixir/v0.12.4.zip",
                        git: %{
                          sha: "543dfdeac80cfaf3483927c189cf9974f1e361eb",
                          url:
@@ -46,7 +46,7 @@ defmodule BobVersionsTest do
                      %{
                        availability: :undetermined,
                        checksum: "",
-                       download: "https://builds.hex.pm/builds/elixir/v0.12.5.zip",
+                       download: "https://repo.hex.pm/builds/elixir/v0.12.5.zip",
                        git: %{
                          sha: "b07fbcf8b73e9353cc336107050a8aac5fdabd11",
                          url:
@@ -71,7 +71,7 @@ defmodule BobVersionsTest do
                      %{
                        availability: :undetermined,
                        checksum: "",
-                       download: "https://builds.hex.pm/builds/elixir/v0.13.0.zip",
+                       download: "https://repo.hex.pm/builds/elixir/v0.13.0.zip",
                        git: %{
                          sha: "ada53524caa6ea27ffaa1a373f5c86bd6cadb0d5",
                          url:
@@ -110,7 +110,7 @@ defmodule BobVersionsTest do
                        availability: :undetermined,
                        checksum:
                          "950f5a6784cb556199797c6f7f0205db5c17dbbf1a7ce0aabdf575429c16c89c",
-                       download: "https://builds.hex.pm/builds/elixir/v0.12.4.zip",
+                       download: "https://repo.hex.pm/builds/elixir/v0.12.4.zip",
                        git: %{
                          sha: "543dfdeac80cfaf3483927c189cf9974f1e361eb",
                          url:
@@ -134,7 +134,7 @@ defmodule BobVersionsTest do
                        availability: :undetermined,
                        checksum:
                          "d11c2d82a603a1362797a181dd8c8a2a5d6d9c6e5e54cfb03e8cb96443b91828",
-                       download: "https://builds.hex.pm/builds/elixir/v0.12.5.zip",
+                       download: "https://repo.hex.pm/builds/elixir/v0.12.5.zip",
                        git: %{
                          sha: "b07fbcf8b73e9353cc336107050a8aac5fdabd11",
                          url:
@@ -187,7 +187,7 @@ defmodule BobVersionsTest do
                      %{
                        availability: :undetermined,
                        checksum: "",
-                       download: "https://builds.hex.pm/builds/otp/ubuntu-14.04/OTP-19.2.tar.gz",
+                       download: "https://repo.hex.pm/builds/otp/ubuntu-14.04/OTP-19.2.tar.gz",
                        git: %{
                          sha: "3473ecd83a7bbe7e0bebb865f25dddb93e3bf10f",
                          url:
@@ -211,7 +211,7 @@ defmodule BobVersionsTest do
                        availability: :undetermined,
                        checksum: "",
                        download:
-                         "https://builds.hex.pm/builds/otp/ubuntu-14.04/OTP-19.3.6.9.tar.gz",
+                         "https://repo.hex.pm/builds/otp/ubuntu-14.04/OTP-19.3.6.9.tar.gz",
                        git: %{
                          sha: "3d0c4930775cf2ab304d5e4701b41ffc2936ce53",
                          url:
@@ -236,7 +236,7 @@ defmodule BobVersionsTest do
                      %{
                        availability: :undetermined,
                        checksum: "",
-                       download: "https://builds.hex.pm/builds/otp/ubuntu-14.04/OTP-20.0.tar.gz",
+                       download: "https://repo.hex.pm/builds/otp/ubuntu-14.04/OTP-20.0.tar.gz",
                        git: %{
                          sha: "040bdce67f88d833bfb59adae130a4ffb4c180f0",
                          url:
