@@ -47,7 +47,8 @@ defmodule BobVersions.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:tzdata, "~> 1.0"},
       {:dart_sass, "~> 0.7.0", runtime: Mix.env() == :dev},
-      {:bulma, "0.9.4", runtime: Mix.env() == :dev}
+      {:bulma, "0.9.4", runtime: Mix.env() == :dev},
+      {:req, "~> 0.5.0 or ~> 1.0"}
     ]
   end
 

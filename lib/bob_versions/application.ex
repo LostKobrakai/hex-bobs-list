@@ -10,6 +10,8 @@ defmodule BobVersions.Application do
     children = [
       # Start the Telemetry supervisor
       BobVersionsWeb.Telemetry,
+      # Finch http client pool
+      BobVersions.Finch,
       # Start the PubSub system
       {Phoenix.PubSub, name: BobVersions.PubSub},
       # Cache for resource availability

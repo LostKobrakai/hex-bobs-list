@@ -67,10 +67,8 @@ defmodule BobVersions.Availability.Worker do
     Logger.debug("Update url #{state.url}")
 
     availability =
-      case BobVersions.Http.request(:head, {String.to_charlist(state.url), []}, [],
-             body_format: :binary
-           ) do
-        {:ok, {{_version, 200, ~c"OK"}, _, _}} -> :available
+      case Req.head(url: state.url, finch: BobVersions.Finch) do
+        {:ok, %Req.Response{status: 200}} -> :available
         _ -> :unavailable
       end
 
