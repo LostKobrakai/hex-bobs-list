@@ -31,6 +31,7 @@ defmodule BobVersionsWeb.ErlangController do
 
       :error ->
         conn
+        |> put_layout(false)
         |> put_view(BobVersionsWeb.ErrorHTML)
         |> render("no_resource.html")
     end
