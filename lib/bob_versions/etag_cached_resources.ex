@@ -134,8 +134,7 @@ defmodule BobVersions.EtagCachedResources do
     url_char = String.to_charlist(url)
 
     result =
-      case BobVersions.Http.request(method, {url_char, headers}, [], body_format: :binary)
-           |> IO.inspect() do
+      case BobVersions.Http.request(method, {url_char, headers}, [], body_format: :binary) do
         {:ok, {{_version, 200, _}, headers, body}} ->
           {:ok, headers, body}
 
