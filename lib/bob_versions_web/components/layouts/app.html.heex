@@ -14,18 +14,16 @@
     </div>
   </div>
 
-  <%= if function_exported?(view_module(@conn), :tabs, 1), do: view_module(@conn).tabs(assigns) %>
 </section>
 
-<main role="main">
+<main role="main" style="flex-grow: 1">
   <%= @inner_content %>
 </main>
 
 <footer class="footer">
   <div class="content has-text-centered">
     <p>
-      <strong>Built</strong>
-      by <a href="https://kobrakai.de">Benjamin Milde</a>. Hosted on <a href="https://gigalixir.com/">gigalixir</a>'s free tier.
+      <strong>Built</strong> by <a href="https://kobrakai.de">Benjamin Milde</a>.
     </p>
   </div>
 </footer>

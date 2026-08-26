@@ -19,7 +19,7 @@ defmodule BobVersions.MixProject do
   def application do
     [
       mod: {BobVersions.Application, []},
-      extra_applications: [:logger, :runtime_tools, :inets, :public_key]
+      extra_applications: [:logger, :runtime_tools]
     ]
   end
 
@@ -34,21 +34,17 @@ defmodule BobVersions.MixProject do
     [
       {:phoenix, "~> 1.7.7"},
       {:phoenix_html, "~> 4.0"},
-      {:phoenix_ecto, "~> 4.4"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 0.20.0"},
       {:floki, ">= 0.30.0", only: :test},
-      {:phoenix_live_dashboard, "~> 0.8.0"},
       {:esbuild, "~> 0.7", runtime: Mix.env() == :dev},
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:tzdata, "~> 1.0"},
       {:dart_sass, "~> 0.7.0", runtime: Mix.env() == :dev},
-      {:bulma, "0.9.4", runtime: Mix.env() == :dev},
-      {:req, "~> 0.5.0 or ~> 1.0"}
+      {:bulma, "0.9.4", runtime: Mix.env() == :dev}
     ]
   end
 

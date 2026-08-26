@@ -7,9 +7,6 @@
 # General application configuration
 import Config
 
-# Set timezone database
-config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
-
 # Configures the endpoint
 config :bob_versions, BobVersionsWeb.Endpoint,
   url: [host: "localhost"],
